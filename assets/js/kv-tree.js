@@ -283,13 +283,17 @@
                 return;
             }
             clearNode = function (isEmpty) {
-                var m = isEmpty ? msg.emptyNodeRemoved : msg.nodeRemoved;
+                var m = isEmpty ? msg.emptyNodeRemoved : msg.nodeRemoved,
+                    $parent = $node.closest('li.kv-parent');
                 $node.remove();
                 $alert = $detail.find('.alert');
                 self.formViewBegin = false;
                 $detail.find('.kv-select-node-msg').remove();
                 if ($alert.length) {
                     $detail.before($alert).html('').append($alert);
+                }
+                if (!$parent.find('li').length) {
+                    $parent.removeClass('kv-parent');
                 }
                 self.showAlert(m, 'info', function () {
                     $detail.append('<h4 class="alert text-center kv-select-node-msg" style="display:none;">' + msg.selectNode + '</h4>');
